@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { cardValue } from '../assets/card_value'
+import { cardValue } from '../assets/evaluate'
 
 import card from '../assets/playing-card-back.jpg'
 

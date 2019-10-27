@@ -1,4 +1,4 @@
-import { cardValue } from '../assets/card_value'
+import { handValue } from '../assets/evaluate'
 import { 
     FETCH_DECK_START,
     FETCH_DECK_SUCCESS,
@@ -64,11 +64,11 @@ const reducer = (state = initialState, action) => {
                     remaining: payload.remaining
                 }, 
                 player: {
-                    score: cardValue(payload.cards[0].value) + cardValue(payload.cards[2].value),
+                    score: handValue([payload.cards[0], payload.cards[2]]),
                     hand: [payload.cards[0], payload.cards[2]]
                 },
                 computer: {
-                    score: cardValue(payload.cards[1].value) + cardValue(payload.cards[3].value),
+                    score: handValue([payload.cards[1], payload.cards[3]]),
                     hand: [payload.cards[1], payload.cards[3]]
                 } 
             }
@@ -77,6 +77,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 player: {
                     ...state.player,
+                    score: handValue([...state.player.hand, payload.cards[0]]),
                     hand: [...state.player.hand, payload.cards[0]]
                 }
             }

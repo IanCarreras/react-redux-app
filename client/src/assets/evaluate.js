@@ -19,5 +19,7 @@ export const cardValue = (value) => {
 }
 
 export const handValue = (hand) => {
-    return hand
+    let score = 0
+    hand.forEach(card => score += cardValue(card.value))
+    return score
 }
