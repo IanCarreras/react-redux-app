@@ -1,13 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { cardValue } from '../assets/card_value'
+
+import card from '../assets/playing-card-back.jpg'
+
+const Image = styled.img`
+    height: 15rem;
+`
+const Back = styled.img`
+    transform: rotate(90deg); 
+    height: 10rem;
+`
 
 const Computer = ({ computer }) => {
     if (!computer.hand[0]) return <h1>Loading...</h1>
     return (
         <div>
-            <h2>{computer.score}</h2>
-            <img src={computer.hand[0].image} />
-            <img src={computer.hand[1].image} />
+            <h2>Computer score: {cardValue(computer.hand[0].value)}</h2>
+            <Image src={computer.hand[0].image} />
+            <Back src={card} alt='card face down' />
         </div>
     )
 }

@@ -1,10 +1,13 @@
+import { cardValue } from '../assets/card_value'
 import { 
     FETCH_DECK_START,
     FETCH_DECK_SUCCESS,
     FETCH_DECK_ERROR,
     DEAL_INITIAL_HAND,
     INITIAL_HAND_SUCCESS,
-    INITIAL_HAND_ERROR
+    INITIAL_HAND_ERROR,
+    PLAYER_HIT_SUCCESS,
+    PLAYER_HIT_ERROR
 } from '../actions/actions'
 
 const initialState = {
@@ -61,13 +64,26 @@ const reducer = (state = initialState, action) => {
                     remaining: payload.remaining
                 }, 
                 player: {
-                    score: parseInt(payload.cards[0].value, 10) + parseInt(payload.cards[2].value, 10),
+                    score: cardValue(payload.cards[0].value) + cardValue(payload.cards[2].value),
                     hand: [payload.cards[0], payload.cards[2]]
                 },
                 computer: {
-                    score: parseInt(payload.cards[1].value, 10) + parseInt(payload.cards[3].value, 10),
+                    score: cardValue(payload.cards[1].value) + cardValue(payload.cards[3].value),
                     hand: [payload.cards[1], payload.cards[3]]
                 } 
+            }
+        case PLAYER_HIT_SUCCESS:
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    hand: [...state.player.hand, payload.cards[0]]
+                }
+            }
+        case PLAYER_HIT_ERROR:
+            return {
+                ...state,
+                error: payload
             }
         default: 
             return state

@@ -1,0 +1,23 @@
+const cardValues = {
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+    '10': 10,
+    'KING': 10,
+    'QUEEN': 10,
+    'JACK': 10,
+    'ACE': 11
+}
+
+export const cardValue = (value) => {
+    return cardValues[value]
+}
+
+export const handValue = (hand) => {
+    return hand
+}

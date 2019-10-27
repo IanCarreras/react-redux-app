@@ -3,10 +3,14 @@ import axios from 'axios'
 export const FETCH_DECK_START = 'FETCH_DECK_START'
 export const FETCH_DECK_SUCCESS = 'FETCH_DECK_SUCCESS'
 export const FETCH_DECK_ERROR = 'FETCH_DECK_ERROR'
+
 export const DEAL_INITIAL_HAND = 'DEAL_INITIAL_HAND'
 export const INITIAL_HAND_SUCCESS = 'INITIAL_HAND_SUCCESS'
 export const INITIAL_HAND_ERROR = 'INITIAL_HAND_ERROR'
 
+export const PLAYER_HIT_ERROR = 'PLAYER_HIT_ERROR'
+export const PLAYER_HIT_SUCCESS = 'PLAYER_HIT_SUCCESS'
+ 
 const getDeck = () => {
     return (dispatch) => {
         dispatch({ type: FETCH_DECK_START })
@@ -35,7 +39,20 @@ const dealHand = (deckId) => {
     }
 }
 
+const hit = (deckId) => {
+    return (dispatch) => {
+        axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
+            .then(res => {
+                dispatch({ type: PLAYER_HIT_SUCCESS, payload: res.data })
+            })
+            .catch(err => {
+                dispatch({ type: PLAYER_HIT_ERROR, payload: err })
+            })
+    }
+}
+
 export const actionCreators = {
     getDeck,
-    dealHand
+    dealHand,
+    hit
 }
