@@ -1,4 +1,4 @@
-import { handValue } from '../assets/evaluate'
+import { handValue, winner } from '../assets/evaluate'
 import { 
     FETCH_DECK_START,
     FETCH_DECK_SUCCESS,
@@ -10,7 +10,8 @@ import {
     PLAYER_HIT_ERROR,
     PLAYER_STAND,
     COMPUTER_HIT_SUCCESS,
-    COMPUTER_HIT_ERROR
+    COMPUTER_HIT_ERROR,
+    END_GAME
 } from '../actions/actions'
 
 const initialState = {
@@ -18,7 +19,7 @@ const initialState = {
     isDeck: false,
     isLoading: false,
     error: null,
-    winner: null,
+    winner: '?',
     player: {
         stand: false,
         score: 0,
@@ -51,6 +52,8 @@ const reducer = (state = initialState, action) => {
                 isDeck: true,
                 isLoading: false
             }
+
+
         case DEAL_INITIAL_HAND:
             return {
                 ...state,
@@ -77,6 +80,8 @@ const reducer = (state = initialState, action) => {
                     hand: [payload.cards[1], payload.cards[3]]
                 } 
             }
+
+
         case PLAYER_HIT_SUCCESS:
             return {
                 ...state,
@@ -91,6 +96,8 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 error: payload
             }
+
+
         case PLAYER_STAND:
             return {
                 ...state,
@@ -99,6 +106,8 @@ const reducer = (state = initialState, action) => {
                     stand: true
                 }
             }
+
+
         case COMPUTER_HIT_ERROR:
             return {
                 ...state,
@@ -112,6 +121,11 @@ const reducer = (state = initialState, action) => {
                     score: handValue([...state.computer.hand, payload.cards[0]]),
                     hand: [...state.computer.hand, payload.cards[0]]
                 }
+            }
+        case END_GAME:
+            return {
+                ...state,
+                winner: winner(state.player.score, state.computer.score) 
             }
         default: 
             return state

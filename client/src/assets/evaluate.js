@@ -23,3 +23,13 @@ export const handValue = (hand) => {
     hand.forEach(card => score += cardValue(card.value))
     return score
 }
+
+export const winner = (player, computer) => {
+    let winner = ''
+    if(player > 21) winner = 'computer'
+    if(computer > 21) winner = 'player'
+    if(player <= 21 && player > computer) winner = 'player'
+    if(computer <= 21 && computer > player) winner = 'computer'
+    if(player === computer) winner = 'Draw'
+    return winner
+}

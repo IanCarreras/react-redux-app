@@ -15,6 +15,8 @@ export const PLAYER_STAND = 'PLAYER_STAND'
 
 export const COMPUTER_HIT_ERROR = 'COMPUTER_HIT_ERROR'
 export const COMPUTER_HIT_SUCCESS = 'COMPUTER_HIT_SUCCESS'
+
+export const END_GAME = 'END_GAME'
  
 const getDeck = () => {
     return (dispatch) => {
@@ -60,9 +62,14 @@ const stand = () => {
     return dispatch => dispatch({ type: PLAYER_STAND })
 }
 
+const endGame = () => {
+    return dispatch => dispatch({ type: END_GAME })
+}
+
 export const actionCreators = {
     getDeck,
     dealHand,
     hit,
-    stand
+    stand,
+    endGame
 }
