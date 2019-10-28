@@ -10,6 +10,11 @@ export const INITIAL_HAND_ERROR = 'INITIAL_HAND_ERROR'
 
 export const PLAYER_HIT_ERROR = 'PLAYER_HIT_ERROR'
 export const PLAYER_HIT_SUCCESS = 'PLAYER_HIT_SUCCESS'
+
+export const PLAYER_STAND = 'PLAYER_STAND'
+
+export const COMPUTER_HIT_ERROR = 'COMPUTER_HIT_ERROR'
+export const COMPUTER_HIT_SUCCESS = 'COMPUTER_HIT_SUCCESS'
  
 const getDeck = () => {
     return (dispatch) => {
@@ -39,20 +44,25 @@ const dealHand = (deckId) => {
     }
 }
 
-const hit = (deckId) => {
+const hit = (deckId, type) => {
     return (dispatch) => {
         axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
             .then(res => {
-                dispatch({ type: PLAYER_HIT_SUCCESS, payload: res.data })
+                dispatch({ type: type === 'player' ? PLAYER_HIT_SUCCESS : COMPUTER_HIT_SUCCESS, payload: res.data })
             })
             .catch(err => {
-                dispatch({ type: PLAYER_HIT_ERROR, payload: err })
+                dispatch({ type: type === 'player' ? PLAYER_HIT_ERROR : COMPUTER_HIT_ERROR, payload: err })
             })
     }
+}
+
+const stand = () => {
+    return dispatch => dispatch({ type: PLAYER_STAND })
 }
 
 export const actionCreators = {
     getDeck,
     dealHand,
-    hit
+    hit,
+    stand
 }

@@ -18,7 +18,6 @@ const App = props => {
   }, [isDeck])
 
   if (!deck) return <h1>Loading...</h1>
-
     return (
     <div className="App">
       <Table />

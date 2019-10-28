@@ -7,7 +7,10 @@ import {
     INITIAL_HAND_SUCCESS,
     INITIAL_HAND_ERROR,
     PLAYER_HIT_SUCCESS,
-    PLAYER_HIT_ERROR
+    PLAYER_HIT_ERROR,
+    PLAYER_STAND,
+    COMPUTER_HIT_SUCCESS,
+    COMPUTER_HIT_ERROR
 } from '../actions/actions'
 
 const initialState = {
@@ -15,7 +18,9 @@ const initialState = {
     isDeck: false,
     isLoading: false,
     error: null,
+    winner: null,
     player: {
+        stand: false,
         score: 0,
         hand: []
     },
@@ -85,6 +90,28 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: payload
+            }
+        case PLAYER_STAND:
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    stand: true
+                }
+            }
+        case COMPUTER_HIT_ERROR:
+            return {
+                ...state,
+                error: payload
+            }
+        case COMPUTER_HIT_SUCCESS:
+            return {
+                ...state,
+                computer: {
+                    ...state.computer,
+                    score: handValue([...state.computer.hand, payload.cards[0]]),
+                    hand: [...state.computer.hand, payload.cards[0]]
+                }
             }
         default: 
             return state
