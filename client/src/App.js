@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux'
 import { actionCreators } from './actions/actions'
 
 import Table from './components/Table'
+import Display from './components/Display'
 
-import './App.css';
+import { AppDiv } from './assets/styled-components'
 
 const App = props => {
   const { actions, deck, isDeck, player, computer, winner } = props
@@ -24,10 +25,15 @@ const App = props => {
 
   if (!deck) return <h1>Loading...</h1>
     return (
-    <div className="App">
-      <h1>Winner: {winner}</h1>
+    <AppDiv>
       <Table />
-    </div>
+      <Display 
+        deckId={deck.deck_id}
+        actions={actions}
+        player={player} 
+        computer={computer} 
+        winner={winner}/>
+    </AppDiv>
   );
 }
 

@@ -3,16 +3,22 @@ import Player from './Player'
 import Computer from './Computer'
 import styled from 'styled-components'
 
-const Wrapper = styled(Player)`
-    margin-top: 5rem;
+const CardTable = styled.div`
+  
+`
+const PlayerHand = styled(Player)`
+  margin-top: 5rem;
+`
+const ComputerHand = styled(Computer)`
+
 `
 
 const Table = ({actions}) => {
     return (
-      <div className="Table">
-        <Computer />
-        <Wrapper />
-      </div>
+      <CardTable>
+        <ComputerHand />
+        <PlayerHand />
+      </CardTable>
     );
 }
 

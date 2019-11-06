@@ -19,7 +19,7 @@ const initialState = {
     isDeck: false,
     isLoading: false,
     error: null,
-    winner: '?',
+    winner: null,
     player: {
         stand: false,
         score: 0,
@@ -67,11 +67,13 @@ const reducer = (state = initialState, action) => {
         case INITIAL_HAND_SUCCESS:
             return {
                 ...state,
+                winner: null,
                 deck: {
                     ...state.deck,
                     remaining: payload.remaining
                 }, 
                 player: {
+                    stand: false,
                     score: handValue([payload.cards[0], payload.cards[2]]),
                     hand: [payload.cards[0], payload.cards[2]]
                 },

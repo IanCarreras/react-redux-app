@@ -16,20 +16,19 @@ const Back = styled.img`
     height: 10rem;
     position: relative;
     top: -2.5rem;
-    left: 1rem;
+    left: -1rem;
     border-radius: .5rem;
 `
 
-const Computer = ({ deck, computer, player, actions }) => {
+const Computer = ({ deck, computer, player, actions, winner }) => {
     useEffect(() => {
         if(player.stand && computer.score < 17) actions.hit(deck.deck_id, 'computer') 
     }, [player.stand, computer.score])
 
     if (!computer.hand[0]) return <h1>Loading...</h1>
 
-    if (player.stand) return (
+    if (player.stand || winner) return (
         <div>
-            <h2>Computer: {computer.score}</h2>
             {
                 computer.hand.map((card, indx) => {
                     return <Image
@@ -42,15 +41,14 @@ const Computer = ({ deck, computer, player, actions }) => {
 
     return (
         <div>
-            <h2>Computer: {cardValue(computer.hand[0].value)}</h2>
             <Image src={computer.hand[0].image} />
             <Back src={card} alt='card face down' />
         </div>
     )
 }
 
-const mapStateToProps = ({ deck, computer, player }) => {
-    return { deck, computer, player }
+const mapStateToProps = ({ deck, computer, player, winner }) => {
+    return { deck, computer, player, winner }
 }
   
 const mapDispatchToProps = (dispatch) => {
